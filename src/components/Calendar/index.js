@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './calendar.css'
-import logo from "../../img/logo.svg";
+import logo from "../../../public/img/logo.svg";
 
 const Calendar = () => (
     <section className="calendar">
