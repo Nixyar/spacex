@@ -48,8 +48,8 @@ class App extends React.Component {
     }
 
     render() {
-        console.log(this.state.company);
-        console.log(this.state.rocketFeatures);
+        // console.log(this.state.company);
+        // console.log(this.state.rocketFeatures);
         return (
             <div>
                 <Header rockets={this.state.rockets} changeRocket={this.changeRocket}/>
