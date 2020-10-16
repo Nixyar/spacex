@@ -1,7 +1,11 @@
 import React from 'react';
+import {BrowserRouter, Route} from "react-router-dom";
 import Header from './components/Header/Header'
+import Home from "./components/Home/Home";
 import Main from './components/Main/Main'
 import Features from "./components/Features/Features";
+import Calendar from "./components/Calendar/Calendar";
+import Details from "./components/Details/Details";
 import Footer from "./components/Footer/Footer";
 
 import FetchData from "./service/FetchData";
@@ -16,12 +20,14 @@ class App extends React.Component {
         rocket: 'Falcon 1',
         rocketFeatures: null,
         rockets: [],
-        company: null
+        company: null,
+        card: null,
     };
 
     componentDidMount() {
         this.updateRocket();
         this.updateCompany();
+        this.updateCard();
     }
 
     updateRocket() {
@@ -47,16 +53,34 @@ class App extends React.Component {
             .then((company) => this.setState({company}))
     }
 
+    updateCard = (card) => {
+        this.setState({card});
+    };
+
     render() {
-        // console.log(this.state.company);
-        // console.log(this.state.rocketFeatures);
         return (
-            <div>
+            <BrowserRouter>
                 <Header rockets={this.state.rockets} changeRocket={this.changeRocket}/>
-                <Main rocket={this.state.rocket}/>
-                <Features rocketFeatures={this.state.rocketFeatures} changeRocket={this.changeRocket}/>
+
+                <Route exact path='/'>
+                    {this.state.company && <Home company={this.state.company}/>}
+                </Route>
+
+                <Route path='/rocket'>
+                    <Main rocket={this.state.rocket}/>
+                    <Features rocketFeatures={this.state.rocketFeatures} changeRocket={this.changeRocket}/>
+                </Route>
+
+                <Route path='/calendar'>
+                    <Calendar updateCard={this.updateCard}/>
+                </Route>
+
+                <Route path='/details'>
+                    {this.state.card && <Details {...this.state.card}/>}
+                </Route>
+
                 <Footer company={this.state.company}/>
-            </div>
+            </BrowserRouter>
         );
     }
 }
